@@ -10,6 +10,15 @@ class ActiveRecord::Base
   end
 end
 
+module ActiveRecord
+  # Just make sure you have the latest version of your schema
+  class Schema < Migration
+    def self.define(info={}, &block)
+      instance_eval(&block)
+    end
+  end
+end
+
 class ActiveRecord::ConnectionAdapters::NullDBAdapter <
     ActiveRecord::ConnectionAdapters::AbstractAdapter
 
