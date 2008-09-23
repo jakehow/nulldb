@@ -147,6 +147,12 @@ class ActiveRecord::ConnectionAdapters::NullDBAdapter <
     NullObject.new
   end
 
+  def select_rows(statement, name = nil)
+    returning([]) do
+      self.execution_log << Statement.new(entry_point, statement)
+    end
+  end  
+
   def insert(statement, name, primary_key, object_id, sequence_name)
     returning(object_id || next_unique_id) do
       with_entry_point(:insert) do
